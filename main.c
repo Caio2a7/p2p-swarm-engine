@@ -12,13 +12,9 @@
 #define PORT 8080
 #define BUFFER_SIZE 32
 
-int main(){ 
-    struct sockaddr_in addr;
+int server_mode() {
     int sfd, error;
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(PORT);
-    inet_aton(LOCALHOST, &addr.sin_addr);
-    
+
     if((sfd = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
         perror("Erro ao criar o socket");
         return 0;
@@ -30,6 +26,20 @@ int main(){
         close(sfd);
         return 0;
     }
+    return 0;
+}
+
+void client_mode() {
+
+}
+
+
+int main(){ 
+    struct sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(PORT);
+    inet_aton(LOCALHOST, &addr.sin_addr);
+    
     
     if(error = bind(sfd, (struct sockaddr*)&addr, sizeof addr) < 0) {
         if(errno == EADDRINUSE) {
